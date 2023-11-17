@@ -6,6 +6,7 @@ import Modal from 'components/Modal/Modal';
 import { ModalContext } from 'context/ModalContext';
 import css from 'components/App.module.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { addProduct, deleteProduct } from 'redux/products/products.reducer';
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -15,18 +16,13 @@ const ProductsPage = () => {
   // дістаємо продукти з нашого сховища, підписуємось на них з сховища
   const products = useSelector(state => state.productsStore.products);
 
-  
   useEffect(() => {
     const stringifiedProducts = JSON.stringify(products);
     localStorage.setItem('products', stringifiedProducts);
   }, [products]);
 
   const handleDeleteProduct = productId => {
-    const deleteProductAction = {
-      type: 'products/deleteProduct',
-      payload: productId,
-    };
-    dispatch(deleteProductAction);
+    dispatch(deleteProduct(productId));
   };
 
   const handleAddProduct = productData => {
@@ -44,13 +40,11 @@ const ProductsPage = () => {
       id: nanoid(),
     };
 
-    const addProductAction = {
-      type: 'products/addProduct',
-      payload: finalProduct,
-    };
-    dispatch(addProductAction);
-
-    
+    // const addProductAction = {
+    //   type: 'products/addProduct',
+    //   payload: finalProduct,
+    // };
+    dispatch(addProduct(finalProduct));
   };
 
   const sortedProducts = [...products].sort((a, b) => b.discount - a.discount);

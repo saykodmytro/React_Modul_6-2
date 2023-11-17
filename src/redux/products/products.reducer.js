@@ -1,7 +1,8 @@
+import { productsData } from 'Data/data';
 
 // тут створюємо початковий стан
 const initialState = {
-  products: JSON.parse(localStorage.getItem('products')) ?? prod, // [{}, {}, ...]
+  products: JSON.parse(localStorage.getItem('products')) ?? productsData, // [{}, {}, ...]
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -24,4 +25,18 @@ export const productReducer = (state = initialState, action) => {
     default:
       return state;
   }
+};
+
+export const deleteProduct = payload => {
+  return {
+    type: 'products/deleteProduct',
+    payload,
+  };
+};
+
+export const addProduct = payload => {
+  return {
+    type: 'products/addProduct',
+    payload,
+  };
 };
