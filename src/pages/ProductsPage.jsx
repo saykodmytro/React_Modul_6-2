@@ -1,9 +1,5 @@
 import { useContext, useEffect } from 'react';
 import { nanoid } from 'nanoid';
-
-// import { Product } from 'components/Product/Product';
-// import Section from 'components/Section/Section';
-// import ProductForm from './ProductForm/ProductForm';
 import { Product, ProductForm, Section } from 'components';
 import Modal from 'components/Modal/Modal';
 
@@ -18,15 +14,8 @@ const ProductsPage = () => {
 
   // дістаємо продукти з нашого сховища, підписуємось на них з сховища
   const products = useSelector(state => state.productsStore.products);
-  console.log('products: ', products);
 
-  // const [products, setProducts] = useState(() => {
-  //   const stringifiedProducts = localStorage.getItem('products');
-  //   const parsedProducts = JSON.parse(stringifiedProducts) ?? productsData;
-
-  //   return parsedProducts;
-  // });
-
+  
   useEffect(() => {
     const stringifiedProducts = JSON.stringify(products);
     localStorage.setItem('products', stringifiedProducts);
@@ -38,7 +27,6 @@ const ProductsPage = () => {
       payload: productId,
     };
     dispatch(deleteProductAction);
-    //   setProducts(products.filter(product => product.id !== productId));
   };
 
   const handleAddProduct = productData => {
@@ -62,8 +50,7 @@ const ProductsPage = () => {
     };
     dispatch(addProductAction);
 
-    // setProducts([finalProduct, ...products]);
-    // setProducts(prevState => [...prevState, finalProduct])
+    
   };
 
   const sortedProducts = [...products].sort((a, b) => b.discount - a.discount);
