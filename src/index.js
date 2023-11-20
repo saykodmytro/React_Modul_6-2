@@ -11,8 +11,7 @@ import { store } from 'redux/store';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ModalContextProvider>
-    <BrowserRouter>
-      {/* підключаємо наш додаток до сховища */}
+    <BrowserRouter basename="/React_Modul_6-2">
       <Provider store={store}>
         <App />
       </Provider>
