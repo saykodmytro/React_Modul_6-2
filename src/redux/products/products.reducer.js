@@ -1,42 +1,29 @@
 import { productsData } from 'Data/data';
 
-// тут створюємо початковий стан
+import { createSlice } from '@reduxjs/toolkit';
+
 const initialState = {
   products: JSON.parse(localStorage.getItem('products')) ?? productsData, // [{}, {}, ...]
 };
 
-export const productReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'products/deleteProduct': {
-      return {
-        ...state,
-        products: state.products.filter(
-          product => product.id !== action.payload
-        ),
-      };
-    }
-    case 'products/addProduct': {
-      // state.products = [...state.products, action.payload];❌
-      return {
-        ...state,
-        products: [...state.products, action.payload], // ✅
-      };
-    }
-    default:
-      return state;
-  }
-};
+const productsSlice = createSlice({
+  // Ім'я слайсу
+  name: 'products',
+  // Початковий стан редюсера слайсу
+  initialState: initialState,
+  // Об'єкт редюсерів
+  reducers: {
+    addProduct(state, { payload }) {
+      // state.products = [...state.products, payload];
+      state.products.push(payload);
+    },
+    deleteProduct(state, { payload }) {
+      state.products = state.products.filter(product => product.id !== payload);
+    },
+  },
+});
 
-export const deleteProduct = payload => {
-  return {
-    type: 'products/deleteProduct',
-    payload,
-  };
-};
-
-export const addProduct = payload => {
-  return {
-    type: 'products/addProduct',
-    payload,
-  };
-};
+// Генератори екшенів
+export const { addProduct, deleteProduct } = productsSlice.actions;
+// Редюсер слайсу
+export const productsReducer = productsSlice.reducer;
